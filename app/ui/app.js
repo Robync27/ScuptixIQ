@@ -952,6 +952,32 @@ async function initApp() {
 
         loadSampleImages();
 
+        // --- Free tier UI gating: pure mesh only (clay) — no colors, no textures
+        try {
+            const lic = await eel.get_license_status()();
+            if (!lic.valid || lic.tier === 'free') {
+                currentTextureMode = 'none';
+                currentBakeTexture = false;
+                const clayBtn = textureGroup.querySelector('[data-mode="none"]');
+                if (clayBtn) {
+                    textureGroup.querySelectorAll('.segment-btn').forEach(b => b.classList.remove('active'));
+                    clayBtn.classList.add('active');
+                }
+                textureGroup.querySelectorAll('.segment-btn').forEach(b => {
+                    if (b.dataset.mode !== 'none') {
+                        b.disabled = true;
+                        b.style.opacity = '0.45';
+                        b.style.cursor = 'not-allowed';
+                        b.title = 'Pro feature — activate a license to unlock colors & textures';
+                    }
+                });
+                if (texResGroupWrapper) texResGroupWrapper.style.display = 'none';
+                console.info('Free tier active: mesh only (no colors/textures).');
+            }
+        } catch (licErr) {
+            console.warn('License check failed:', licErr);
+        }
+
     } catch (e) {
         console.warn('Failed to fetch system info:', e);
         hardwareName.textContent = '💻 Standard Engine';

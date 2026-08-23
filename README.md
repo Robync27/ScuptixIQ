@@ -52,7 +52,7 @@ everything runs **100% locally**: nothing ever leaves your computer.
 | Image → 3D mesh | ✅ | ✅ |
 | Export GLB / OBJ / STL / PLY | ✅ | ✅ |
 | Mesh quality | **Medium (≤256 grid)** | High (up to 384 grid) |
-| Textures | **Vertex colors only (no baked textures)** | UV atlas + baked textures up to **8K** |
+| Textures | **None — pure geometry, no colors** | Vertex colors + UV atlas, baked up to **8K** |
 | Batch mode (folder → folder) | — | ✅ |
 | Text-to-Image concept generator | — | ✅ |
 | Commercial usage rights (company) | — | ✅ Studio |
@@ -164,8 +164,8 @@ it directly helps the project. Buying a Pro license funds new features
 ## ❓ FAQ
 
 **Does the free version expire or add watermarks?**
-No. The Free tier is unlimited and watermark-free forever — meshes come with
-vertex colors instead of baked textures.
+No. The Free tier is unlimited and watermark-free forever — meshes are pure
+geometry (clay), without colors or textures.
 
 **Do I need a GPU?**
 No, CPU works (slower). NVIDIA GPU with 6+ GB VRAM is recommended (~6 s per model).

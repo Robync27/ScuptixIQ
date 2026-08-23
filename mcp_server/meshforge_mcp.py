@@ -104,7 +104,7 @@ def tool_generate_model(image_path: str, resolution: int = 256) -> dict:
     free_tier = (not lic.get("valid")) or lic.get("tier") == "free"
     if free_tier:
         resolution = min(resolution, 256)
-        texture_mode = "vertex_colors"
+        texture_mode = "none"
     else:
         texture_mode = "uv_atlas"
 

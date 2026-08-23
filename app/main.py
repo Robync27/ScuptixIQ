@@ -245,10 +245,10 @@ def generate_3d(image_base64: str, options_json: str = "{}") -> Dict[str, Any]:
     if free_tier:
         resolution = min(resolution, 256)
         bake_texture = False
-        texture_mode = "vertex_colors"
+        texture_mode = "none"
         texture_resolution = min(texture_resolution, 512)
-        tier_notice = ("Free edition: mesh only, no textures, medium quality. "
-                       "Activate a Pro license for textured high-res models.")
+        tier_notice = ("Free edition: pure mesh without colors or textures, medium quality. "
+                       "Activate a Pro license for vertex colors and 8K textured models.")
 
     try:
         # Step 1: Decode image
@@ -392,7 +392,7 @@ def generate_batch(input_dir: str, output_dir: str, options_json: str = "{}") ->
     if free_tier:
         resolution = min(resolution, 256)
         bake_texture = False
-        texture_mode = "vertex_colors"
+        texture_mode = "none"
         texture_resolution = min(texture_resolution, 512)
 
     preprocessor = _get_preprocessor()
@@ -456,7 +456,7 @@ def generate_batch(input_dir: str, output_dir: str, options_json: str = "{}") ->
         "tier": lic.get("tier", "free"),
     }
     if free_tier:
-        summary["notice"] = ("Free edition: batch produced meshes without textures. "
+        summary["notice"] = ("Free edition: batch produced pure meshes without colors or textures. "
                              "Activate a Pro license for textured models.")
     try:
         eel.updateProgress(f"Batch complete: {ok_count}/{len(files)} models", 1.0)()

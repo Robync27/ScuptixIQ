@@ -28,11 +28,12 @@ It is provided under the MIT License above, with the following tier policy:
 
   FREE (this repository):
     - Image-to-3D mesh generation (TripoSR engine, MIT)
-    - Export GLB / OBJ / STL / PLY (vertex colors, no baked textures)
+    - Export GLB / OBJ / STL / PLY (pure geometry, no colors or textures)
     - Resolution up to 256 (medium quality)
     - Fully offline, no telemetry
 
   PRO / STUDIO (commercial, license key):
+    - Vertex colors (fast colored preview)
     - UV atlas unwrapping + baked textures up to 8K
     - Resolution up to 384 (high quality)
     - Batch processing (folder of images -> folder of GLB)
