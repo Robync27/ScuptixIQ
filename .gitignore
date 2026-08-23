@@ -1,0 +1,66 @@
+# ============================================================
+# MeshForge 3D — .gitignore (GitHub / open-core publication)
+# ============================================================
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+
+# --- Model weights (downloaded at first run, NEVER commit) ---
+app/models/model.ckpt
+app/models/model.safetensors
+app/models/*.ckpt
+app/models/*.safetensors
+app/models/.cache/
+app/models/figures/
+*.safetensors
+*.ckpt
+
+# --- Generated outputs ---
+app/ui/outputs/
+app/ui/samples/*.png
+app/ui/samples/*.jpg
+!app/ui/samples/.gitkeep
+
+# --- Build / packaging artifacts ---
+build/
+dist/
+installer_output/
+lite_runtime/
+*.exe
+*.zip
+*.spec.bak
+version_info.txt
+
+# --- Caches ---
+.cache/
+.gradio/
+tools/_cache/
+
+# --- Logs ---
+*.log
+
+# --- Internal docs (not for public repo) ---
+IMPROVEMENTS_AND_MONETIZATION.md
+tools/MICROSOFT_FP_FIX.md
+
+# --- Local env / secrets ---
+.env
+*.key
+
+# --- OS / IDE ---
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# --- First-run marker ---
+app/.ai_deps_ok
+# --- Unrelated project kept locally, not part of the open-core repo ---
+roblox_game/

@@ -1,0 +1,1 @@
+Add screenshot.png (main window) and demo.gif here for the README.

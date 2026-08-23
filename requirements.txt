@@ -1,0 +1,39 @@
+# MeshForge 3D — Universal Image-to-3D Application
+# ===================================================
+# Native support for NVIDIA CUDA, DirectML, and Multi-core CPU.
+#
+# Install: pip install -r requirements.txt
+
+# PyTorch Deep Learning & Neural Rendering
+torch>=2.0.0
+torchvision>=0.15.0
+transformers>=4.30.0
+safetensors>=0.3.0
+huggingface-hub>=0.20.0
+
+# Open-Source Text-to-Image (Prompt → Concept Image → 3D)
+diffusers>=0.27.0
+accelerate>=0.27.0
+pystray>=0.19.5
+
+# 3D Mesh Processing, UV Unwrapping & Baking
+trimesh>=4.0.0
+PyMCubes>=0.1.4
+scikit-image>=0.21.0
+scipy>=1.10.0
+xatlas>=0.0.7
+moderngl>=5.8.0
+
+# Image Processing & AI Background Removal
+numpy>=1.24.0
+Pillow>=10.0.0
+opencv-python-headless>=4.8.0
+rembg>=2.0.50
+
+# Web Application Framework & Desktop UI
+eel>=0.16.0
+requests>=2.31.0
+tqdm>=4.66.0
+
+# Optional Packaging
+pyinstaller>=6.0.0

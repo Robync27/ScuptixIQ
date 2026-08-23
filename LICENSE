@@ -1,0 +1,42 @@
+MIT License
+
+Copyright (c) 2026 MeshForge 3D Contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---------------------------------------------------------------------------
+ADDITIONAL NOTICE — Open Core Model
+---------------------------------------------------------------------------
+This repository is the FREE / open-source core of MeshForge 3D.
+It is provided under the MIT License above, with the following tier policy:
+
+  FREE (this repository):
+    - Image-to-3D mesh generation (TripoSR engine, MIT)
+    - Export GLB / OBJ / STL / PLY (vertex colors, no baked textures)
+    - Resolution up to 256 (medium quality)
+    - Fully offline, no telemetry
+
+  PRO / STUDIO (commercial, license key):
+    - UV atlas unwrapping + baked textures up to 8K
+    - Resolution up to 384 (high quality)
+    - Batch processing (folder of images -> folder of GLB)
+    - Text-to-Image concept generation pipeline
+    - Priority support, commercial usage rights for companies
+
+Purchasing a Pro/Studio license supports continued open-source development.

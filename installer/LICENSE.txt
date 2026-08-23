@@ -1,0 +1,35 @@
+MeshForge 3D — End User License Agreement (EULA)
+=================================================
+
+Copyright (c) 2026 MeshForge. All rights reserved.
+
+1. GRANT OF LICENSE
+   You may install and use this software on any number of computers that you
+   own or control. Commercial use of generated 3D assets is permitted under
+   the Studio license tier.
+
+2. THIRD-PARTY COMPONENTS
+   This application bundles and/or downloads open-source components:
+     - TripoSR (MIT License) — Copyright Tripo AI & Stability AI
+     - PyTorch (BSD-style License)
+     - diffusers / Hugging Face (Apache 2.0)
+     - DreamShaper 8 / Stable Diffusion 1.5 weights (CreativeML OpenRAIL-M)
+     - rembg / u2net (MIT License)
+     - trimesh, xatlas, PyMCubes, scikit-image (MIT/BSD licenses)
+     - Three.js (MIT License)
+   Full license texts are available in the "licenses" folder of the
+   installation directory and from the respective project repositories.
+
+3. AI MODEL WEIGHTS
+   Neural network weights are downloaded on first use directly from their
+   original publishers (Hugging Face) and remain subject to the respective
+   model licenses. No model weights are redistributed inside this installer.
+
+4. DISCLAIMER OF WARRANTY
+   THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+
+5. LIMITATION OF LIABILITY
+   IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+   CLAIM, DAMAGES OR OTHER LIABILITY ARISING FROM THE USE OF THIS SOFTWARE.
