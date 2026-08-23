@@ -1,12 +1,34 @@
 # 🔥 MeshForge 3D — Universal 3D Reconstruction Studio
 
-> **From idea to 3D model in 60 seconds — fully offline, no subscriptions, no limits.**
+![License](https://img.shields.io/badge/license-MIT-green) ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-blue) ![Python](https://img.shields.io/badge/python-3.10%2B-yellow) ![GPU](https://img.shields.io/badge/CUDA%20%7C%20CPU-supported-brightgreen) ![Offline](https://img.shields.io/badge/100%25-offline-orange) ![Stars](https://img.shields.io/badge/%E2%AD%90-star%20if%20useful-ffcc00)
+
+> **From idea to 3D model in 60 seconds — fully offline, no subscriptions, no limits, no watermarks.**
 
 MeshForge 3D turns a single photo (or a text prompt) into a ready-to-use 3D mesh.
 Powered by the open-source **TripoSR** engine (Tripo AI + Stability AI, MIT) —
 everything runs **100% locally**: nothing ever leaves your computer.
 
 ![MeshForge 3D](docs/screenshot.png)
+
+## 🆚 Why not Meshy / Tripo AI / Luma?
+
+| | Cloud services (Meshy, Tripo…) | **MeshForge 3D** |
+|---|---|---|
+| Privacy | Your photos go to their servers | **Nothing leaves your PC** |
+| Pricing | Subscription + credit limits | **Free core, one-time Pro key** |
+| Internet | Required | **Not needed after setup** |
+| Limits | Credits run out | **Unlimited generations** |
+| Watermarks | On free plans | **None, ever** |
+
+## 🎯 Who is it for
+
+- 🖨️ **3D-print hobbyists** — STL from a photo in a minute
+- 🎮 **Indie game devs** — props & assets for Unity / Godot / Unreal
+- 🛒 **Marketplace sellers** — 3D visuals of products
+- 🏠 **Architects & interior designers** — fast furniture concepts
+- 🎓 **Education** — a friendly entry into 3D + AI
+- 🤖 **AI-agent builders** — MCP server for Claude Desktop / Cline / Cursor
+
 
 ---
 
@@ -135,6 +157,36 @@ Sell keys via Gumroad / Lemon Squeezy / itch.io — validation is fully offline.
 
 ## ⭐ Support the project
 
-If MeshForge 3D saves you time, please **star the repo** — it directly helps the
-project. Buying a Pro license funds new features (multi-view reconstruction,
-texture upscaling, Blender/Unity export plugins).
+If MeshForge 3D saves you time, please **star the repo** and **share your renders** —
+it directly helps the project. Buying a Pro license funds new features
+(multi-view reconstruction, texture upscaling, Blender/Unity export plugins).
+
+## ❓ FAQ
+
+**Does the free version expire or add watermarks?**
+No. The Free tier is unlimited and watermark-free forever — meshes come with
+vertex colors instead of baked textures.
+
+**Do I need a GPU?**
+No, CPU works (slower). NVIDIA GPU with 6+ GB VRAM is recommended (~6 s per model).
+
+**Does it send my images anywhere?**
+Never. Generation is 100% local; the only network use is the one-time model download.
+
+**Can I sell models I generate?**
+Yes — Free tier output is yours. For company-wide commercial deployment, get a
+Studio license.
+
+**Is there an API?**
+Yes — the built-in MCP server lets AI agents (Claude Desktop, Cline, Cursor)
+generate models with a tool call.
+
+## 🗺️ Roadmap
+
+- [x] Image → 3D (TripoSR)
+- [x] Prompt → Image → 3D pipeline
+- [x] Batch processing
+- [x] MCP server for AI agents
+- [ ] Multi-view reconstruction (4 views → better geometry)
+- [ ] Real-ESRGAN texture upscaling
+- [ ] One-click send to Blender / Unity / Unreal
