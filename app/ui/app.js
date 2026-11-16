@@ -26,6 +26,9 @@ const resolutionGroup = document.getElementById('resolutionGroup');
 const resolutionBadge = document.getElementById('resolutionBadge');
 const textureGroup = document.getElementById('textureGroup');
 const samplesCarousel = document.getElementById('samplesCarousel');
+const generationMode = document.getElementById('generationMode');
+const multiviewInputs = document.getElementById('multiviewInputs');
+const supportingViews = [...multiviewInputs.querySelectorAll('input[data-view]')];
 
 // Hardware & Header
 const hardwareName = document.getElementById('hardwareName');
@@ -465,7 +468,7 @@ function setImage(base64Data) {
     previewImage.style.display = 'block';
     dropContent.style.display = 'none';
     btnClearImage.style.display = 'inline-block';
-    btnGenerate.disabled = false;
+    updateGenerateButton();
 }
 
 function clearImage(e) {
@@ -477,7 +480,7 @@ function clearImage(e) {
     previewImage.style.display = 'none';
     dropContent.style.display = 'flex';
     btnClearImage.style.display = 'none';
-    btnGenerate.disabled = true;
+    updateGenerateButton();
     fileInput.value = '';
 }
 
@@ -794,9 +797,38 @@ if (texResGroup) {
 // ---------------------------------------------------------------------------
 // 3D Generation Pipeline
 // ---------------------------------------------------------------------------
+function updateGenerateButton() {
+    const hasSupportingView = supportingViews.some(input => input.files.length > 0);
+    btnGenerate.disabled = isGenerating || !selectedImageBase64
+        || (generationMode.value === 'multiview' && !hasSupportingView);
+}
+
+generationMode.addEventListener('change', () => {
+    const multiview = generationMode.value === 'multiview';
+    document.getElementById('sourceImageTitle').textContent = multiview ? 'Front View' : 'Source Image';
+    multiviewInputs.style.display = multiview ? 'block' : 'none';
+    textureGroup.closest('.control-group').style.display = multiview ? 'none' : '';
+    texResGroupWrapper.style.display = !multiview && currentTextureMode === 'uv_atlas' ? 'block' : 'none';
+    paddingSlider.closest('.control-group').style.display = multiview ? 'none' : '';
+    updateGenerateButton();
+});
+
+for (const input of supportingViews) {
+    input.addEventListener('change', updateGenerateButton);
+}
+
+function readView(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(new Error('Could not read ' + file.name));
+        reader.readAsDataURL(file);
+    });
+}
+
 btnGenerate.addEventListener('click', async (e) => {
     e.preventDefault();
-    if (!selectedImageBase64 || isGenerating) return;
+    if (btnGenerate.disabled || isGenerating) return;
 
     isGenerating = true;
     btnGenerate.disabled = true;
@@ -804,7 +836,8 @@ btnGenerate.addEventListener('click', async (e) => {
     progressBarFill.style.width = '5%';
     progressPercent.textContent = '5%';
     progressTitle.textContent = 'Initializing Neural Pipeline...';
-    progressSubtitle.textContent = 'Preparing image and compute device';
+    const multiview = generationMode.value === 'multiview';
+    progressSubtitle.textContent = multiview ? 'Preparing reference views for Hunyuan3D-2mv' : 'Preparing image and compute device';
 
     const options = {
         resolution: currentResolution,
@@ -817,7 +850,18 @@ btnGenerate.addEventListener('click', async (e) => {
     };
 
     try {
-        const result = await eel.generate_3d(selectedImageBase64, JSON.stringify(options))();
+        let result;
+        const optionsJson = JSON.stringify(options);
+        if (multiview) {
+            const front = selectedImageBase64;
+            const selected = supportingViews.filter(input => input.files.length > 0);
+            const pairs = await Promise.all(selected.map(async input => [
+                input.dataset.view, await readView(input.files[0]),
+            ]));
+            result = await eel.generate_multiview({front, ...Object.fromEntries(pairs)}, optionsJson)();
+        } else {
+            result = await eel.generate_3d(selectedImageBase64, optionsJson)();
+        }
 
         if (result && result.success) {
             currentModelId = result.model_id;
@@ -837,7 +881,7 @@ btnGenerate.addEventListener('click', async (e) => {
         alert(`Pipeline failure: ${err.message || err}`);
     } finally {
         isGenerating = false;
-        btnGenerate.disabled = false;
+        updateGenerateButton();
         progressOverlay.style.display = 'none';
     }
 });
