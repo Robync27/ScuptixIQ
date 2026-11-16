@@ -18,6 +18,7 @@ import threading
 import time
 import traceback
 import zipfile
+from uuid import uuid4
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -48,6 +49,7 @@ from core import ImagePreprocessor, MeshProcessor, TSREngine, Text2ImageEngine
 
 # --- Licensing (offline Pro/Studio keys) ------------------------------------
 from core.license_manager import validate_license, save_license, load_saved_key
+from core import hunyuan_multiview
 
 @eel.expose
 def get_license_status() -> Dict[str, Any]:
@@ -345,6 +347,67 @@ def generate_3d(image_base64: str, options_json: str = "{}") -> Dict[str, Any]:
             "success": False,
             "error": str(exc),
         }
+
+
+@eel.expose
+def generate_multiview(views: Dict[str, str], options_json: str = "{}") -> Dict[str, Any]:
+    """Generate a single mesh from labeled front and supporting views."""
+    global _last_generated_mesh, _last_bake_output, _last_model_id
+
+    try:
+        if not isinstance(views, dict) or not views.get("front") or len(views) < 2:
+            raise ValueError("Choose a front image and at least one back, left, or right image.")
+        if set(views) - set(hunyuan_multiview.VIEWS):
+            raise ValueError("Supported views are front, back, left, and right.")
+
+        options = json.loads(options_json)
+        resolution = int(options.get("resolution", 256))
+        if resolution not in (128, 256, 384, 512):
+            raise ValueError("Choose a supported geometry resolution.")
+        lic = validate_license()
+        if not lic.get("valid") or lic.get("tier") == "free":
+            resolution = min(resolution, 256)
+
+        device = options.get("device", "auto")
+        if device in ("auto", "best"):
+            device = "cuda:0"
+        if not isinstance(device, str) or not device.startswith("cuda:") or not device[5:].isdigit():
+            raise ValueError("Select Auto or an NVIDIA CUDA device for Multi-Image mode.")
+
+        runtime = hunyuan_multiview.runtime_paths()
+        # Release the background-preloaded TripoSR model before starting CUDA inference.
+        with _engine_load_lock:
+            if _engine is not None and _engine.is_loaded:
+                _engine.unload()
+
+        start = time.monotonic()
+        try:
+            eel.updateProgress("Running Hunyuan3D-2mv (first run downloads weights)...", 0.25)()
+        except Exception:
+            pass
+        mesh = hunyuan_multiview.generate_mesh(
+            views, resolution, bool(options.get("remove_bg", True)), device, runtime,
+        )
+
+        processor = _get_processor()
+        model_id = f"model_{uuid4().hex}"
+        filename = f"{model_id}.glb"
+        stats = processor.get_mesh_stats(mesh)
+        stats.update(
+            generation_time_s=round(time.monotonic() - start, 2),
+            device_used=device, resolution=resolution, has_baked_texture=False,
+        )
+        processor.export_glb(mesh, os.path.join(_OUTPUT_DIR, filename))
+        _last_generated_mesh, _last_bake_output, _last_model_id = mesh, None, model_id
+
+        return {
+            "success": True, "model_id": model_id,
+            "model_url": f"/outputs/{filename}", "stats": stats,
+            "tier": lic.get("tier", "free"),
+        }
+    except Exception as exc:
+        traceback.print_exc()
+        return {"success": False, "error": str(exc)}
 
 
 # ===================================================================

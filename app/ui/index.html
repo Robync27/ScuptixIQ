@@ -72,10 +72,19 @@
     <main class="app-workspace">
         <!-- Sidebar Controls -->
         <aside class="sidebar-panel">
+            <div class="panel-section">
+                <div class="control-group">
+                    <label for="generationMode" class="section-title">Input Mode</label>
+                    <select id="generationMode" class="hud-select">
+                        <option value="single">Single Photo</option>
+                        <option value="multiview">Multi-Image</option>
+                    </select>
+                </div>
+            </div>
             <!-- Image Input Zone -->
             <div class="panel-section">
                 <div class="section-header">
-                    <label class="section-title">Source Image</label>
+                    <label class="section-title" id="sourceImageTitle">Source Image</label>
                     <button id="btnClearImage" class="btn-text" style="display:none">✕ Clear</button>
                 </div>
                 
@@ -95,6 +104,18 @@
                         <button type="button" id="btnBrowse" class="btn-browse">Browse File...</button>
                     </div>
                     <img id="previewImage" class="preview-image" alt="Input preview" style="display:none">
+                </div>
+            </div>
+
+            <div class="panel-section" id="multiviewInputs" style="display:none">
+                <p class="sub-label-hint">Use a front image above and add at least one matching view. Multi-Image generates one untextured mesh and requires NVIDIA CUDA.</p>
+                <div class="control-group">
+                    <label for="backView">Back view</label>
+                    <input id="backView" data-view="back" type="file" accept="image/png,image/jpeg,image/webp">
+                    <label for="leftView">Left view</label>
+                    <input id="leftView" data-view="left" type="file" accept="image/png,image/jpeg,image/webp">
+                    <label for="rightView">Right view</label>
+                    <input id="rightView" data-view="right" type="file" accept="image/png,image/jpeg,image/webp">
                 </div>
             </div>
 

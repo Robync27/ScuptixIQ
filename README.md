@@ -190,3 +190,19 @@ generate models with a tool call.
 - [ ] Multi-view reconstruction (4 views → better geometry)
 - [ ] Real-ESRGAN texture upscaling
 - [ ] One-click send to Blender / Unity / Unreal
+
+
+## Multi-Image with Hunyuan3D-2mv
+
+Multi-Image uses a front reference and one to three matching back, left, or right views to generate one untextured mesh. Use the same subject and pose in every image. Preview and export the result from the regular workspace.
+
+Install the optional engine separately on a machine with an NVIDIA GPU and CUDA-enabled PyTorch. Use Tencent's [Hunyuan3D-2 installation instructions](https://github.com/Tencent-Hunyuan/Hunyuan3D-2/tree/f8db63096c8282cb27354314d896feba5ba6ff8a#install-requirements) in a dedicated `.venv` inside the Hunyuan3D-2 checkout. ScuptixIQ uses the shape generation workflow, so the optional texture-rendering extensions are unnecessary. Review the [Hunyuan3D-2mv model license](https://huggingface.co/tencent/Hunyuan3D-2mv/blob/main/LICENSE) before use.
+
+For example, after preparing the checkout and virtual environment on `B:`, launch ScuptixIQ from PowerShell in its project folder:
+
+```powershell
+$env:SCUPTIXIQ_HUNYUAN_ROOT = 'B:\AI\Hunyuan3D-2'
+.\.venv\Scripts\python.exe app\main.py
+```
+
+If your Hunyuan environment is elsewhere, set `SCUPTIXIQ_HUNYUAN_PYTHON` to its full Python executable path. The Hunyuan cache and temporary input files are stored in `.scuptixiq-cache` inside the Hunyuan checkout. The model downloads on first use. Set the device to Auto or select a CUDA device, choose **Multi-Image**, upload the front image and your supporting views, and click **Generate 3D Model**. **Single Photo** continues to use TripoSR.
